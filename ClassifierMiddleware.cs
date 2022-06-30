@@ -4,17 +4,18 @@ using System.Diagnostics;
 
 public static class ClassifierMiddleware
 {
-    const string script = "/home/leer/PycharmProjects/pythonProject/main.py";
-    const string runner = "/home/leer/python37Env/bin/python";
+    const string script = "classify.py";
+    const string runner = "/usr/bin/python3";
 
     public static ClassifyResponse Classify(IFormFile image)
     {
         var imagePath = SaveImage(image);
 
+
         var psi = new ProcessStartInfo
         {
             FileName = runner,
-            Arguments = $"\"{script}\" \"{imagePath}\"",
+            Arguments = $"\"{Path.GetFullPath(script)}\" \"{imagePath}\"",
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardOutput = true,
