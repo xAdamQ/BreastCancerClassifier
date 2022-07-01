@@ -5,7 +5,9 @@ using System.Diagnostics;
 public static class ClassifierMiddleware
 {
     const string script = "classify.py";
+
     const string runner = "/usr/bin/python3";
+    // const string runner = "/home/leer/python37Env/bin/python";
 
     public static ClassifyResponse Classify(IFormFile image)
     {
@@ -37,7 +39,7 @@ public static class ClassifierMiddleware
         Console.WriteLine(errors);
 
         var lines = res.Split("\n");
-        var resClass = lines[Array.IndexOf(lines, "class") + 1];
+        var resClass = lines[Array.IndexOf(lines, "class") + 1].Trim();
 
         return new ClassifyResponse
         {
@@ -48,7 +50,7 @@ public static class ClassifierMiddleware
 
     private static string SaveImage(IFormFile image)
     {
-        var uploadsFolder = Path.Combine("/home/leer/projects/BreastCancerClassifier", "images");
+        var uploadsFolder = Path.GetFullPath("images");
         var uniqueFileName = Guid.NewGuid() + "_" + image.FileName;
         var filePath = Path.Combine(uploadsFolder, uniqueFileName);
         using var fileStream = new FileStream(filePath, FileMode.Create);

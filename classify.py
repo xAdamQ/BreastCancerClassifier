@@ -24,10 +24,10 @@ BATCH_SIZE = 16
 EARLY_STOPPING_PATIENCE = 5
 EPOCHS = 50
 
-DEEP_MODEL_PATH = "/home/leer/PycharmProjects/pythonProject/deepModel.h5"
-BEST_FEATURES_PATH = "/home/leer/PycharmProjects/pythonProject/features.npy"
-CLASSIC_MODEL_PATH = "/home/leer/PycharmProjects/pythonProject/MLModel.pkl"
-#---------------------------------------
+DEEP_MODEL_PATH = "deepModel.h5"
+BEST_FEATURES_PATH = "features.npy"
+CLASSIC_MODEL_PATH = "MLModel.pkl"
+# ---------------------------------------
 
 
 imagePath = sys.argv[1]
@@ -52,7 +52,7 @@ beastFeatures = beastFeatures.reshape((1, beastFeatures.shape[0]))
 
 svcModel = pickle.load(open(CLASSIC_MODEL_PATH, "rb"))  # Load The Classic ML Model For Final Prediction
 pred = svcModel.predict(beastFeatures)
-print("\nclass\n",CLASSES[pred[0]].strip(),"\n")
+print("\nclass\n", CLASSES[pred[0]].strip(), "\n")
 
 output = cv2.imread(imagePath)
 output = cv2.cvtColor(output, cv2.COLOR_BGR2RGB)
@@ -67,5 +67,5 @@ cv2.putText(output, text1, (5, 35), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 50), 2
 cv2.putText(output, text2, (5, 75), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 50, 25), 2)
 plt.imshow(output)
 
-plt.imsave("/home/leer/tst.png",output)
+plt.imsave("/home/leer/tst.png", output)
 cv2.waitKey(1000)
