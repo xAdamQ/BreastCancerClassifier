@@ -4,10 +4,10 @@ using System.Diagnostics;
 
 public static class ClassifierMiddleware
 {
-    const string script = "classify.py";
+    const string script = "./classify.py";
 
-    const string runner = "/usr/bin/python3";
-    // const string runner = "/home/leer/python37Env/bin/python";
+    // const string runner = "/usr/bin/python3";
+    const string runner = "/home/leer/python37Env/bin/python";
 
     public static ClassifyResponse Classify(IFormFile image)
     {
@@ -21,7 +21,7 @@ public static class ClassifierMiddleware
             UseShellExecute = false,
             CreateNoWindow = true,
             RedirectStandardOutput = true,
-            RedirectStandardError = true
+            RedirectStandardError = true,
         };
 
 
@@ -29,6 +29,7 @@ public static class ClassifierMiddleware
         var res = string.Empty;
 
         using var process = Process.Start(psi);
+
 
         errors = process.StandardError.ReadToEnd();
         res = process.StandardOutput.ReadToEnd();
@@ -41,6 +42,8 @@ public static class ClassifierMiddleware
         var lines = res.Split("\n");
         var resClass = lines[Array.IndexOf(lines, "class") + 1].Trim();
 
+        DeleteImage(imagePath);
+
         return new ClassifyResponse
         {
             Class = resClass,
@@ -48,9 +51,26 @@ public static class ClassifierMiddleware
         };
     }
 
+    private static void DeleteImage(string imagePath)
+    {
+        try
+        {
+            if (File.Exists(imagePath))
+            {
+                File.Delete(imagePath);
+                Console.WriteLine("File deleted.");
+            }
+            else Console.WriteLine("File not found");
+        }
+        catch (IOException ioExp)
+        {
+            Console.WriteLine(ioExp.Message);
+        }
+    }
+
     private static string SaveImage(IFormFile image)
     {
-        var uploadsFolder = Path.GetFullPath("images");
+        var uploadsFolder = Path.GetFullPath("./images");
         var uniqueFileName = Guid.NewGuid() + "_" + image.FileName;
         var filePath = Path.Combine(uploadsFolder, uniqueFileName);
         using var fileStream = new FileStream(filePath, FileMode.Create);

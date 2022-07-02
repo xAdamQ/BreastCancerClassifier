@@ -24,9 +24,9 @@ BATCH_SIZE = 16
 EARLY_STOPPING_PATIENCE = 5
 EPOCHS = 50
 
-DEEP_MODEL_PATH = "deepModel.h5"
-BEST_FEATURES_PATH = "features.npy"
-CLASSIC_MODEL_PATH = "MLModel.pkl"
+DEEP_MODEL_PATH = "./deepModel.h5"
+BEST_FEATURES_PATH = "./features.npy"
+CLASSIC_MODEL_PATH = "./MLModel.pkl"
 # ---------------------------------------
 
 
@@ -67,5 +67,5 @@ cv2.putText(output, text1, (5, 35), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 50), 2
 cv2.putText(output, text2, (5, 75), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 50, 25), 2)
 plt.imshow(output)
 
-plt.imsave("/home/leer/tst.png", output)
+# plt.imsave("./home/leer/tst.png", output)
 cv2.waitKey(1000)
