@@ -6,8 +6,8 @@ public static class ClassifierMiddleware
 {
     const string script = "./classify.py";
 
-    // const string runner = "/usr/bin/python3";
-    const string runner = "/home/leer/python37Env/bin/python";
+    const string runner = "/usr/bin/python3";
+    // const string runner = "/home/leer/python37Env/bin/python";
 
     public static ClassifyResponse Classify(IFormFile image)
     {
